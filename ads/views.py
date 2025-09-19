@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.http import require_POST
 from .models import Ad
+from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView, RetrieveAPIView
+from .serializers import AdSerializer
 
 def ads_all(request):
     ads = Ad.objects.all()
@@ -23,6 +25,25 @@ def ad_delete(request, pk):
     ad = get_object_or_404(Ad, pk=pk)
     ad.delete()
     return JsonResponse({"status": "ok", "deleted_id": pk})
+
+class AllAdList(ListAPIView):
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    
+class Create_ads(CreateAPIView):
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    
+class delete_ads(DestroyAPIView):
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+    
+class update_ads(UpdateAPIView):
+    queryset = Ad.objects.all()
+    serializer_class = AdSerializer
+
+
+
 
 
     
